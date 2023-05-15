@@ -10,5 +10,5 @@ public record DagligFastDTO(int patientId, int laegemiddelId,
 public record DagligSkaevDTO(int patientId, int laegemiddelId, Dosis[] doser,
         DateTime startDato, DateTime slutDato);
 public record DateTimeDTO(DateTime date);
-public record MsgRecord (string msg);
+public record MsgRecord(string msg);
 public record AnbefaletDosisDTO(int laegemiddelId, double anbefaletDosis);

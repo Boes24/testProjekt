@@ -27,6 +27,9 @@ public class DagligSkæv : Ordination {
 		{
 			samletDoser += dose.antal;
 		}
+		if (samletDoser < 0){
+			return -1;
+		}
         return samletDoser;
 	}
 

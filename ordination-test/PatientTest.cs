@@ -17,7 +17,7 @@ public class PatientTest
         Assert.AreEqual(navn, patient.navn);
     }
 
-
+    /*
     [TestMethod]
     public void TestDerAltidFejler()
     {
@@ -28,4 +28,5 @@ public class PatientTest
         Patient patient = new Patient(cpr, navn, vægt);
         Assert.AreEqual("Egon", patient.navn);
     }
+    */
 }

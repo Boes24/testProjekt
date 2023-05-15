@@ -7,7 +7,8 @@
 
 <div class="container">
 
-    @if (PageState == State.Start) {
+    @if (PageState == State.Start)
+    {
         <h1>Opret ordination</h1>
 
         <br />
@@ -23,29 +24,36 @@
             </div>
             <div class="col-md-4 border p-3">
                 <h3>Vælg ordination</h3>
-                <input @onclick='() => selectType(OrdinationType.PN)' type="radio" name="type" >
+                <input @onclick='() => selectType(OrdinationType.PN)' type="radio" name="type">
                 <label for="PN">PN</label><br>
                 <input @onclick='() => selectType(OrdinationType.DagligSkaev)' type="radio" name="type">
-                <label for="Skæv">Daglig skæv</label><br>  
-                <input @onclick='() => selectType(OrdinationType.DagligFast)'type="radio" name="type">
+                <label for="Skæv">Daglig skæv</label><br>
+                <input @onclick='() => selectType(OrdinationType.DagligFast)' type="radio" name="type">
                 <label for="Fast">Daglig fast</label><br><br>
 
                 <button class="btn btn-primary" @onclick="ClickOpret">Opret ordination</button>
             </div>
         </div>
-    } else if (PageState == State.OpretPN) {
+    }
+    else if (PageState == State.OpretPN)
+    {
         <OpretPN patient=@patient laegemiddel=@laegemiddel anbefaletDosisPerDøgn=@AnbefaletDosisPerDøgn
             onFortryd="onFortryd" onDone="onDone"></OpretPN>
-    } else if (PageState == State.OpretFast) {
+    }
+    else if (PageState == State.OpretFast)
+    {
         <OpretDagligFast patient=@patient laegemiddel=@laegemiddel anbefaletDosisPerDøgn=@AnbefaletDosisPerDøgn
             onFortryd="onFortryd" onDone="onDone"></OpretDagligFast>
-    } else if (PageState == State.OpretSkaev) {
+    }
+    else if (PageState == State.OpretSkaev)
+    {
         <OpretDagligSkaev patient=@patient laegemiddel=@laegemiddel anbefaletDosisPerDøgn=@AnbefaletDosisPerDøgn
             onFortryd="onFortryd" onDone="onDone"></OpretDagligSkaev>
     }
 
 
-    @if (!string.IsNullOrEmpty(message)) {
+    @if (!string.IsNullOrEmpty(message))
+    {
         <div class="row">
             <div class="alert alert-primary alert-dismissible mt-3" role="alert">
                 @message
@@ -68,28 +76,32 @@
 
     protected override async Task OnInitializedAsync()
     {
-        patienter = await apiService.GetPatienter();        
+        patienter = await apiService.GetPatienter();
     }
 
-    private void onSelectPatient(PatientResponse p) {
+    private void onSelectPatient(PatientResponse p)
+    {
         this.patient = p;
         Console.WriteLine("Selected " + p);
         BeregnAnbefaletDøgnDosis();
     }
 
-    private void onSelectLægemiddel(Laegemiddel l) {
+    private void onSelectLægemiddel(Laegemiddel l)
+    {
         this.laegemiddel = l;
         Console.WriteLine("Selected " + l);
         BeregnAnbefaletDøgnDosis();
     }
 
-    private void onFortryd() {
+    private void onFortryd()
+    {
         Console.WriteLine("Fortryd");
         PageState = State.Start;
         StateHasChanged();
     }
 
-    private void onDone(string msg) {
+    private void onDone(string msg)
+    {
         Console.WriteLine("Done");
         this.message = msg;
         PageState = State.Start;
@@ -105,26 +117,41 @@
         StateHasChanged();
     }
 
-    private void selectType(OrdinationType type) {
+    private void selectType(OrdinationType type)
+    {
         this.type = type;
         Console.WriteLine("Selected " + type);
     }
 
-    private async void BeregnAnbefaletDøgnDosis() {
+    private async void BeregnAnbefaletDøgnDosis()
+    {
         if (patient != null && laegemiddel != null)
         {
-            AnbefaletDosisDTO dto = await apiService.GetAnbefaletDosisPerDøgn(patient.id, laegemiddel);
-            AnbefaletDosisPerDøgn = dto.anbefaletDosis;
-            Console.WriteLine(AnbefaletDosisPerDøgn);
+            try
+            {
+                AnbefaletDosisDTO dto = await apiService.GetAnbefaletDosisPerDøgn(patient.id, laegemiddel);
+                AnbefaletDosisPerDøgn = dto.anbefaletDosis;
+                Console.WriteLine(AnbefaletDosisPerDøgn);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 
-    private void ClickOpret() {
-        if (type == OrdinationType.PN) {
+    private void ClickOpret()
+    {
+        if (type == OrdinationType.PN)
+        {
             PageState = State.OpretPN;
-        } else if (type == OrdinationType.DagligFast) {
+        }
+        else if (type == OrdinationType.DagligFast)
+        {
             PageState = State.OpretFast;
-        } else if (type == OrdinationType.DagligSkaev) {
+        }
+        else if (type == OrdinationType.DagligSkaev)
+        {
             PageState = State.OpretSkaev;
         }
     }
