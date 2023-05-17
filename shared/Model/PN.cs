@@ -5,9 +5,14 @@ public class PN : Ordination
     public double antalEnheder { get; set; }
     public List<Dato> dates { get; set; } = new List<Dato>();
 
+    public DateTime startDato;
+    public DateTime slutDato;
+
     public PN(DateTime startDen, DateTime slutDen, double antalEnheder, Laegemiddel laegemiddel) : base(laegemiddel, startDen, slutDen)
     {
         this.antalEnheder = antalEnheder;
+        this.startDato = startDen.Date;
+        this.slutDato = slutDen.Date;
     }
 
     public PN() : base(null!, new DateTime(), new DateTime())
@@ -21,7 +26,16 @@ public class PN : Ordination
     /// </summary>
     public bool givDosis(Dato givesDen)
     {
-        dates.Add(givesDen);
+
+        if (givesDen.dato < startDato)
+        {
+            throw new InvalidDataException("Dato må ikke være før forløbets start dato");
+        }else if (givesDen.dato > slutDato){
+            throw new InvalidDataException("Dato må ikke være efter forløbets slut dato");
+        }
+        else {
+            dates.Add(givesDen);
+        }
         return true;
     }
 

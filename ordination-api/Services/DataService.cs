@@ -101,8 +101,13 @@ public class DataService
             p[1].ordinationer.Add(ordinationer[4]);
             p[1].ordinationer.Add(ordinationer[5]);
 
+
+
             db.SaveChanges();
         }
+
+        Patient patientX = (db.Patienter.FirstOrDefault(x => x.PatientId == 1))!;
+        System.Console.WriteLine("vægt: "+patientX.vaegt);
     }
 
 

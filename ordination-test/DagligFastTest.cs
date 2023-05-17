@@ -13,7 +13,6 @@ public class DagligFastTest
     {
 
     }
-    private DataService? service;
 
     Laegemiddel? lm;
     DagligFast? ordination;

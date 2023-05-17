@@ -18,20 +18,23 @@ public class AnbefaletDosisTest
     [TestInitialize]
     public void SetupBeforeEachTest()
     {
-
+        var optionsBuilder = new DbContextOptionsBuilder<OrdinationContext>();
+        optionsBuilder.UseInMemoryDatabase(databaseName: "test-database");
+        var context = new OrdinationContext(optionsBuilder.Options);
+        service = new DataService(context);
     }
 
     [TestMethod]
     [ExpectedException(typeof(NullReferenceException))]
     public void TC15()
     {
-        service!.GetAnbefaletDosisPerDøgn(1,2);
+        service!.GetAnbefaletDosisPerDøgn(1, 2);
     }
 
     [TestMethod]
     public void TC16()
     {
-
+        Assert.AreEqual(20, service!.GetAnbefaletDosisPerDøgn(2, 2));
     }
 
     [TestMethod]

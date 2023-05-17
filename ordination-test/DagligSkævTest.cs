@@ -14,7 +14,6 @@ public class DagligSkævTest
     {
 
     }
-    private DataService? service;
 
     Laegemiddel? lm;
     DagligSkæv? DagligSkævOrdination;
@@ -45,7 +44,7 @@ public class DagligSkævTest
                 new Dosis(CreateTimeOnly(12, 0, 0), 3),
                 new Dosis(CreateTimeOnly(16, 0, 0), -4),
             }.ToList();
-        Assert.AreEqual(DagligSkævOrdination.doegnDosis(), 0);
+        Assert.AreEqual(0, DagligSkævOrdination.doegnDosis());
     }
 
     [TestMethod]
@@ -56,7 +55,7 @@ public class DagligSkævTest
                 new Dosis(CreateTimeOnly(12, 0, 0), 3),
                 new Dosis(CreateTimeOnly(16, 0, 0), 5),
             }.ToList();
-        Assert.AreEqual(DagligSkævOrdination.doegnDosis(), 9);
+        Assert.AreEqual(9, DagligSkævOrdination.doegnDosis());
     }
 
 
