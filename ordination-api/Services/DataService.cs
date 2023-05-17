@@ -23,17 +23,16 @@ public class DataService
     {
 
         // Patients
-        Patient[] patients = new Patient[6];
+        Patient[] patients = new Patient[5];
         patients[0] = db.Patienter.FirstOrDefault()!;
 
         if (patients[0] == null)
         {
-            patients[0] = new Patient("151252-1542", "Jakob Jensen (0KG)", 0);
-            patients[1] = new Patient("121256-0512", "Jane Jensen", 63.4);
-            patients[2] = new Patient("070985-1153", "Finn Madsen", 83.2);
-            patients[3] = new Patient("050972-1233", "Hans Jørgensen", 89.4);
-            patients[4] = new Patient("011064-1522", "Ulla Nielsen", 59.9);
-            patients[5] = new Patient("123456-1234", "Ib Hansen", 87.7);
+            patients[0] = new Patient("121256-0512", "Jane Jensen", 63.4);
+            patients[1] = new Patient("070985-1153", "Finn Madsen", 83.2);
+            patients[2] = new Patient("050972-1233", "Hans Jørgensen", 89.4);
+            patients[3] = new Patient("011064-1522", "Ulla Nielsen", 59.9);
+            patients[4] = new Patient("123456-1234", "Ib Hansen", 87.7);
 
             db.Patienter.Add(patients[0]);
             db.Patienter.Add(patients[1]);
@@ -195,11 +194,13 @@ public class DataService
     /// <param name="patient"></param>
     /// <param name="laegemiddel"></param>
     /// <returns></returns>
-	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId)
+	public double GetAnbefaletDosisPerDøgn(Patient patientX, Laegemiddel laegemiddelX)
     {
+        /*
         Laegemiddel laegemiddelX = (db.Laegemiddler.FirstOrDefault(x => x.LaegemiddelId == laegemiddelId))!;
         Patient patientX = (db.Patienter.FirstOrDefault(x => x.PatientId == patientId))!;
-
+        */
+        
         System.Console.WriteLine(patientX.vaegt);
 
         if (patientX.vaegt <= 0){

@@ -100,7 +100,13 @@ app.MapPut("/api/ordinationer/pn/{id}/anvend", (DataService service, int id, Dat
 
 app.MapPost("/api/patienter/{id}/beregnAnbefaletDosisPerDøgn", (DataService service, int id, AnbefaletDosisDTO dto) =>
 {
-    double dosisStørrelse =  service.GetAnbefaletDosisPerDøgn(id, dto.laegemiddelId);
+    var patientList = service.GetPatienter();
+    var patient = patientList.FirstOrDefault(x => x.PatientId == id);
+
+    var LaegemidlerList = service.GetLaegemidler();
+    var Laegemiddel = LaegemidlerList.FirstOrDefault(x => x.LaegemiddelId == dto.laegemiddelId);
+
+    double dosisStørrelse =  service.GetAnbefaletDosisPerDøgn(patient!, Laegemiddel!);
     AnbefaletDosisDTO response = new AnbefaletDosisDTO(dto.laegemiddelId, dosisStørrelse);
     return Results.Ok(response);
 });

@@ -15,6 +15,10 @@ public class AnbefaletDosisTest
     }
     private DataService? service;
 
+    Laegemiddel? lm;
+    Patient? patient;
+    Patient? patientKG0;
+
     [TestInitialize]
     public void SetupBeforeEachTest()
     {
@@ -22,19 +26,23 @@ public class AnbefaletDosisTest
         optionsBuilder.UseInMemoryDatabase(databaseName: "test-database");
         var context = new OrdinationContext(optionsBuilder.Options);
         service = new DataService(context);
+
+        lm = new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+        patient = new Patient("121256-0315", "Lars Hansen", 20);
+        patientKG0 = new Patient("121257-0316", "Ulla Hansen", 0);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(NullReferenceException))]
+    [ExpectedException(typeof(InvalidDataException))]
     public void TC15()
     {
-        service!.GetAnbefaletDosisPerDøgn(1, 2);
+        service!.GetAnbefaletDosisPerDøgn(patientKG0!, lm!);
     }
 
     [TestMethod]
     public void TC16()
     {
-        Assert.AreEqual(20, service!.GetAnbefaletDosisPerDøgn(2, 2));
+        Assert.AreEqual(patient!.vaegt*lm!.enhedPrKgPrDoegnLet, service!.GetAnbefaletDosisPerDøgn(patient!, lm!));
     }
 
     [TestMethod]
