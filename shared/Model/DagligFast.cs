@@ -27,7 +27,7 @@ public class DagligFast : Ordination {
 		double samletDoser = 0;
 		foreach (Dosis dose in getDoser())
 		{
-			samletDoser += dose.antal;
+			samletDoser += dose.antal; 
 		}
         return samletDoser;
 	}

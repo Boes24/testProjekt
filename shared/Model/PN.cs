@@ -26,7 +26,6 @@ public class PN : Ordination
     /// </summary>
     public bool givDosis(Dato givesDen)
     {
-
         if (givesDen.dato < startDato)
         {
             throw new InvalidDataException("Dato må ikke være før forløbets start dato");

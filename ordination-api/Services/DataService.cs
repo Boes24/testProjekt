@@ -39,7 +39,6 @@ public class DataService
             db.Patienter.Add(patients[2]);
             db.Patienter.Add(patients[3]);
             db.Patienter.Add(patients[4]);
-            db.Patienter.Add(patients[5]);
             db.SaveChanges();
         }
 
@@ -182,7 +181,7 @@ public class DataService
     public string AnvendOrdination(int id, Dato dato)
     {
         PN pn = (PN)(db.Ordinationer.FirstOrDefault(x => x.OrdinationId == id)!);
-        pn.dates.Add(dato);
+        pn.givDosis(dato);
         db.SaveChanges();
         return null!;
     }
@@ -202,7 +201,6 @@ public class DataService
         */
         
         System.Console.WriteLine(patientX.vaegt);
-
         if (patientX.vaegt <= 0){
             throw new InvalidDataException("Patients vægt må ikke være mindre eller lig med 0.");
         }
